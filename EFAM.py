@@ -1,7 +1,26 @@
 import torch
 import torch.nn as nn
-
-
+"""
+Key Component Annotations:
+Residual Class:
+Implements stochastic depth regularization
+Randomly skips residual connection during training (0.2 drop rate suggested in paper)
+Fuse method optimizes for deployment by merging BN and Conv layers
+PSSA Class:
+Channel-separated self-attention (r=0.25 for P4 layer, r=0.5 for P5 layer)
+Uses 1x1 convolution for QKV projection
+Implements scaled dot-product attention
+Output projection maintains input dimensions
+EFEB Class:
+Depthwise separable convolution for lightweight feature extraction
+Inverted bottleneck design with channel expansion
+Residual connection with 1x1 shortcut
+EFAM Class:
+Combines EFEB (local features) and PSSA (global features)
+Multiple EFEB blocks for hierarchical feature learning
+Channel ratio r controls PSSA participation (0.5 in paper)
+Final projection maintains output dimensions
+"""
 class Residual(torch.nn.Module):
     """
     Residual connection with stochastic depth regularization
