@@ -1,6 +1,10 @@
 import torch
 import torch.nn as nn
-
+"""
+The ETA (Enhanced Triple Attention) module is designed to enhance the feature representation by applying multiple attention mechanisms. It combines three different attention gates (AttentionGate) along with the SimAM self - attention mechanism.
+The main idea is to apply attention in different permutations of the input feature map. By doing so, it can capture different aspects of the feature information. For example, permuting the channel and height dimensions (x_perm1), the channel and width dimensions (x_perm2), and also applying attention directly on the original feature map (x).
+After applying attention in each case, a sigmoid activation is used to generate attention maps. Finally, these attention maps are averaged to get the final attention map that can be used to enhance the input feature map. This approach helps in highlighting the important features and suppressing the less relevant ones, thus improving the overall performance of the model.
+"""
 class Mix(nn.Module):
     """
     Mixing module that combines two feature maps with a learnable mixing factor.
